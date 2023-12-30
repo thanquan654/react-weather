@@ -1,0 +1,282 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+$primaryTextColor: #d8dce2;
+$secondaryTextColor: #696f77;
+$primaryBackground: #0b131e;
+
+@mixin box ($horizontal: 10px, $vertical: 10px) {
+  padding: $vertical+px $horizontal+px;
+  border-radius: 10px;
+  background-color: #202b3b;
+  width: 100%;
+}
+@mixin title {
+  text-transform: uppercase;
+  color: $secondaryTextColor;
+  font-size: .9rem;
+  font-weight: 600;
+}
+@mixin respond($breakpoint) {
+  @if($breakpoint == medium)  {
+    @media (max-width: 900px) { @content }
+  }
+  @if($breakpoint == small)  {
+    @media (max-width: 600px) { @content }
+  }
+}
+
+body {
+  background-color: #343e4d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  @include respond(small) {
+    background-color: $primaryBackground;
+  }
+}
+.container {
+  width: 97vw;  
+  height: 97vh;
+  border-radius: 15px;
+  background-color: $primaryBackground;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border: 1px solid #867a7a;
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+  @include respond(small) {
+    width: 100vw;
+    height: 100vh;
+    border: none;
+    border-radius: 0;
+  }
+
+  .search-bar {
+    @include box(5, 10);
+    border: none;
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    &:has(input:hover), &:has(input:focus) {
+      box-shadow: rgba(141, 138, 138, 0.2) 0px 2px 8px 0px;
+    }
+    @include respond(medium) {
+      width: 100%;
+    }
+    input {
+      background-color: transparent;
+      border: none;
+      color: $primaryTextColor;
+      padding: 10px;
+      width: 100%;
+      &::-webkit-input-placeholder {
+        color: $primaryTextColor;
+      }
+    }
+
+    .search-icon {
+      font-size: 1.2rem;
+      &.clickable:hover {
+        cursor: pointer;
+        color: #ff0;
+      }
+    }
+  }
+
+  .weather-information {
+    display: flex;
+    gap: 10px;
+    position: relative;
+    overflow-y: scroll;
+    @include respond(medium) {
+      flex-direction: column;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $primaryBackground;
+      z-index: 1;
+      
+    }
+
+    .realtime {
+      flex: 70%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-direction: column;
+
+      .realtime-temp {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        .left {
+          display:flex;
+          align-items:flex-start;
+          justify-content:space-between;
+          flex-direction:column;
+          .city-name {
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 10px 0;
+          }
+          .temp {
+            font-size: 3.5rem;
+            font-weight: 600;
+            margin: 10px 0;
+          }
+        }
+        .right {
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          flex-direction:column;
+          color: $secondaryTextColor;
+        }
+      }
+
+      .today-forecast {
+        @include box(15, 20);
+        margin: 10px 0;
+        
+        .title {
+          @include title;
+        }
+        .today-forecast-list {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 20px 0 10px;
+          @include respond(medium) {
+            flex-wrap: wrap;
+            gap: 15px;
+          }
+          .today-forecast-item {
+            list-style: none;
+            flex: 1;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            flex-direction:column;
+            gap: 10px;
+            @include respond(medium) {
+              flex: 31%;
+            }
+            .hour {
+              color: $secondaryTextColor;
+              font-weight: 600;
+            }
+            .temp {
+              font-size: 1.2rem;
+              font-weight: 600;
+            }
+          }
+        }
+      }
+
+      .air-conditions {
+        @include box(15, 20);
+        .title {
+          @include title();
+        }
+        .air-conditions-list {
+          display: flex;
+          justify-content: space-evenly;
+          align-items: flex-start;
+          flex-wrap: wrap;
+          margin-top: 10px;
+
+          .air-conditions-item {
+            flex: 33.3333%;
+            display: flex;
+            gap: 10px;
+            padding: 10px 0;
+            @include respond(small) {
+              flex: 50%;
+            }
+            .left {
+              font-size: 1.5rem;
+            }
+            .right {
+              display: flex;
+              flex-direction: column;
+              gap: 5px;
+              .item-title {
+                color: $secondaryTextColor;
+              }
+              .item-value {
+                color: $primaryTextColor;
+                font-size: 1.5rem;
+                font-weight: 600;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .future-forecast {
+      @include box(15, 20);
+      flex: 30%;
+
+      .title {
+        @include title();
+      }
+      .future-forecast-list {
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        flex-direction:column;
+        margin-top: 10px;
+        & .future-forecast-item + .future-forecast-item {
+          border-top: solid $secondaryTextColor 1px;
+        }
+        .future-forecast-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          list-style: none;
+          width: 100%;
+          padding: 10px 0 ;
+          .day {
+            color: $secondaryTextColor;
+            flex: 15%;
+            text-align: start;
+          }
+          .weather {
+            color: $primaryTextColor;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex: 60%;
+          }
+          .temp {
+            font-size: 1.1rem;
+            .max { color: $primaryTextColor; }
+            .min { color: $secondaryTextColor; }
+            flex: 25%;
+            text-align: end;
+          }
+        }
+      }
+    }
+  }
+}
