@@ -102,7 +102,7 @@ function App() {
   const getWeatherInformation = async () => {
     setIsError(false)
     setLoading(true)
-    await axios.get('http://api.weatherapi.com/v1/forecast.json', { 
+    await axios.get('https://api.weatherapi.com/v1/forecast.json', { 
       params: {
         key: API_KEY,
         q: toNonAccentVietnamese(searchInput),
